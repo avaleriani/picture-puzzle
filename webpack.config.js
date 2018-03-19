@@ -1,41 +1,49 @@
-const Webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const Autoprefixer = require('autoprefixer');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const path = require('path');
+const Webpack = require("webpack");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CleanWebpackPlugin = require("clean-webpack-plugin");
+const Autoprefixer = require("autoprefixer");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const path = require("path");
 const polyfill = require("babel-polyfill");
 module.exports = {
-  mode: process.env.WEBPACK_SERVE ? 'development' : 'production',
+  mode: process.env.WEBPACK_SERVE ? "development" : "production",
   plugins: [
-    new CleanWebpackPlugin(['dist']),
+    new CleanWebpackPlugin(["dist"]),
     new Webpack.NamedModulesPlugin(),
     new HtmlWebpackPlugin({
-      title: 'MediaMonks',
+      title: "MediaMonks",
       hash: true,
-      template: './index.html'
+      template: "./index.html"
     }),
     new Webpack.LoaderOptionsPlugin({
       minimize: true
+    }),
+    new Webpack.DefinePlugin({
+      "CANVAS_RENDERER": JSON.stringify(true),
+      "WEBGL_RENDERER": JSON.stringify(true)
     })
   ],
-  entry: ["babel-polyfill", './src/js/index.js'],
+  entry: ["babel-polyfill", "./src/js/index.js"],
   output: {
-    path: path.join(__dirname, './public'),
-    filename: 'js/bundle.js',
+    path: path.join(__dirname, "./public"),
+    filename: "js/bundle.js",
     pathinfo: true
   },
   module: {
     rules: [
       {
+        test: [/\.vert$/, /\.frag$/],
+        use: "raw-loader"
+      },
+      {
         test: /\.(scss)$/,
-        use: [{ loader: 'css-loader' },
+        use: [{loader: "css-loader"},
           {
-            loader: 'postcss-loader', options:
-              {
-                ident: 'postcss',
-                plugins: () => [Autoprefixer()]
-              }
+            loader: "postcss-loader", options:
+            {
+              ident: "postcss",
+              plugins: () => [Autoprefixer()]
+            }
           },
           MiniCssExtractPlugin.loader,
           {
@@ -53,22 +61,22 @@ module.exports = {
         test: /\.js/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
+          loader: "babel-loader",
           options: {
-            presets: ['env']
+            presets: ["env"]
           }
         }
       },
       {
         test: /\.(png|svg|jp?g|gif)$/,
         use: [
-          'file-loader'
+          "file-loader"
         ]
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
         use: [
-          'file-loader'
+          "file-loader"
         ]
       }
     ]

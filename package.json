@@ -6,12 +6,13 @@
     "author": "Agustin Valeriani <agvaleriani@gmail.com>",
     "license": "MIT",
     "scripts": {
-        "dev": " webpack-serve --mode development",
-        "build": "webpack --mode production"
+        "dev": " webpack-serve --open --log-time",
+        "build": "webpack"
     },
     "devDependencies": {
         "autoprefixer": "^8.1.0",
         "babel-cli": "^6.26.0",
+        "babel-core": "6",
         "babel-loader": "^7.1.4",
         "babel-polyfill": "^6.26.0",
         "babel-preset-env": "^1.6.1",
@@ -21,11 +22,12 @@
         "eslint-plugin-import": "^2.9.0",
         "html-webpack-plugin": "^3.0.6",
         "mini-css-extract-plugin": "^0.2.0",
+        "raw-loader": "^0.5.1",
         "webpack": "^4.1.1",
+        "webpack-cli": "^2.0.12",
         "webpack-serve": "^0.2.0"
     },
     "dependencies": {
-        "phaser": "^3.2.1",
-        "webpack-cli": "^2.0.12"
+        "phaser": "^3.2.1"
     }
 }
