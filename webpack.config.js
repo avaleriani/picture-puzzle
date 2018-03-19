@@ -6,7 +6,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
 const polyfill = require("babel-polyfill");
 module.exports = {
-  mode: 'development',
+  mode: process.env.WEBPACK_SERVE ? 'development' : 'production',
   plugins: [
     new CleanWebpackPlugin(['dist']),
     new Webpack.NamedModulesPlugin(),
