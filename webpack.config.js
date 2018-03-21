@@ -4,9 +4,11 @@ const CleanWebpackPlugin = require("clean-webpack-plugin");
 const Autoprefixer = require("autoprefixer");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require("path");
-const polyfill = require("babel-polyfill");
+const HardSourceWebpackPlugin = require("hard-source-webpack-plugin");
+require("babel-polyfill");
 module.exports = {
-  mode: process.env.WEBPACK_SERVE ? "development" : "production",
+  mode: process.env.MODE,
+  cache: true,
   plugins: [
     new CleanWebpackPlugin(["dist"]),
     new Webpack.NamedModulesPlugin(),
@@ -21,7 +23,8 @@ module.exports = {
     new Webpack.DefinePlugin({
       "CANVAS_RENDERER": JSON.stringify(true),
       "WEBGL_RENDERER": JSON.stringify(true)
-    })
+    }),
+    new HardSourceWebpackPlugin()
   ],
   entry: ["babel-polyfill", "./src/js/index.js"],
   output: {
