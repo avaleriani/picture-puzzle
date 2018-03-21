@@ -1,16 +1,14 @@
 const Webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
-const Autoprefixer = require("autoprefixer");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require("path");
-const HardSourceWebpackPlugin = require("hard-source-webpack-plugin");
 require("babel-polyfill");
 module.exports = {
   mode: process.env.MODE,
   cache: true,
   plugins: [
-    new CleanWebpackPlugin(["dist"]),
+    new CleanWebpackPlugin(["public"]),
     new Webpack.NamedModulesPlugin(),
     new HtmlWebpackPlugin({
       title: "MediaMonks",
@@ -24,7 +22,11 @@ module.exports = {
       "CANVAS_RENDERER": JSON.stringify(true),
       "WEBGL_RENDERER": JSON.stringify(true)
     }),
-    new HardSourceWebpackPlugin()
+    new MiniCssExtractPlugin({
+      filename: "css/[name].css",
+      path: __dirname + "/public/css",
+      chunkFilename: "[id].css"
+    })
   ],
   entry: ["babel-polyfill", "./src/js/index.js"],
   output: {
@@ -39,26 +41,14 @@ module.exports = {
         use: "raw-loader"
       },
       {
-        test: /\.(scss)$/,
-        use: [{loader: "css-loader"},
-          {
-            loader: "postcss-loader", options:
-            {
-              ident: "postcss",
-              plugins: () => [Autoprefixer()]
-            }
-          },
+        test: /\.(sass|scss)$/,
+        use: [
           MiniCssExtractPlugin.loader,
-          {
-            loader: "css-loader"
-          }, {
-            loader: "sass-loader",
-            options: {
-              sourceMap: true,
-              precision: 8,
-              data: "$ENV: " + "PRODUCTION" + ";"
-            }
-          }]
+          "css-loader?sourceMap=true",
+          "postcss-loader?sourceMap=true",
+          "resolve-url-loader",
+          "sass-loader?sourceMap=true"
+        ]
       },
       {
         test: /\.js/,

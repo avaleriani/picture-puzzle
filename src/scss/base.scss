@@ -1,0 +1,13 @@
+@import 'reset';
+
+body {
+  font: 100% Helvetica, sans-serif;
+  background-color: #000000;
+}
+
+#game {
+  canvas {
+    margin: auto;
+    display: flex;
+  }
+}
