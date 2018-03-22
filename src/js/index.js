@@ -1,9 +1,11 @@
 import Phaser from "phaser";
-import Scene from "./Scene";
+import Scene from "./gameManager";
 import "./../scss/base.scss";
 
-const gameWidth = 800,
-  gameHeight = 600;
+const gameWidth = 500;
+const gameHeight = 500;
+const rowCount = 2;
+const columnCount = 2;
 
 let config = {
   title: "Media Monks Puzzle",
@@ -13,7 +15,7 @@ let config = {
   height: gameHeight,
   parent: document.getElementById("game"),
   scene: [
-    Scene
+    new Scene(rowCount, columnCount)
   ]
 };
 
