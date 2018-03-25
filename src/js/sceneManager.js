@@ -1,20 +1,21 @@
-import Phaser from "phaser";
+import { Scene, Math } from "phaser";
 import { shufflePuzzle } from "./helpers";
 
 /** Class with game scene configuration and functionality. */
-export class SceneManager extends Phaser.Scene {
-  constructor(rows, columns) {
+export default class SceneManager extends Scene {
+  constructor(rows, columns, image) {
     super();
     this.rows = rows;
     this.columns = columns;
     this.piecesGroup = [];
+    this.image = image;
   }
 
   /**
    * Loads assets to be used in the scene.
    */
   preload() {
-    this.load.spritesheet("background", "../static/images/monks.jpg",
+    this.load.spritesheet("background", this.image,
       {frameWidth: this.sys.game.config.width / this.rows, frameHeight: this.sys.game.config.height / this.columns});
   }
 
@@ -114,7 +115,7 @@ export class SceneManager extends Phaser.Scene {
       x: blackTile.posX * (this.sys.game.config.width / this.rows),
       y: blackTile.posY * (this.sys.game.config.height / this.columns),
       duration: 250,
-      ease: Phaser.Math.Easing.Bounce
+      ease: Math.Easing.Bounce
     });
   }
 

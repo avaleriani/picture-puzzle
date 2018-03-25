@@ -2,6 +2,7 @@ import Phaser from "phaser";
 
 export function shufflePuzzle(piecesAmount) {
   const shuffledPuzzle = Phaser.Actions.Shuffle(Phaser.Utils.Array.NumberArray(0, piecesAmount - 1));
+  console.log(piecesAmount)
   if (shuffledPuzzle) {
     if (!isSolvable(shuffledPuzzle) || isSorted(shuffledPuzzle)) {
       return shufflePuzzle(piecesAmount);
