@@ -1,23 +1,36 @@
 # Picture Puzzle
 
-
-
-## Getting Started
+Randomly generates a sliding puzzle for the user to solve.
 
 
 ### Prerequisites
 
-
+```
+node
+yarn
+```
 
 ### Installing
 
-A step by step series of examples that tell you have to get a development env running
-
-Say what the step will be
+```yarn install```
 
 ```
-Give the example
+### Commands
+
+#### Launch a local development server
+
+```
+yarn run dev
 ```
 
+#### Generates a build
+```
+yarn run build
+```
+
+#### Run the tests
+```
+yarn test
+```
 
 Based on: https://github.com/photonstorm/phaser-examples/blob/master/examples/games/sliding%20puzzle.js

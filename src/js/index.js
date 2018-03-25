@@ -1,26 +1,36 @@
 import Phaser from "phaser";
-import Scene from "./gameManager";
+import Scene from "./sceneManager";
 import "./../scss/base.scss";
 
-const gameWidth = 500;
-const gameHeight = 500;
-const rowCount = 2;
-const columnCount = 2;
+export class GameManager {
+  consturctor() {
+    this.gameWidth = 500;
+    this.gameHeight = 500;
+    this.rowCount = 4;
+    this.columnCount = 4;
+    this.config = null;
+  }
 
-let config = {
-  title: "Media Monks Puzzle",
-  version: "1.0",
-  url: "https://github.com/avaleriani/picture-puzzle",
-  width: gameWidth,
-  height: gameHeight,
-  parent: document.getElementById("game"),
-  scene: [
-    new Scene(rowCount, columnCount)
-  ]
-};
+  setConfig() {
+    return {
+      title: "Media Monks Puzzle",
+      version: "1.0",
+      url: "https://github.com/avaleriani/picture-puzzle",
+      width: this.gameWidth,
+      height: this.gameHeight,
+      parent: document.getElementById("game"),
+      scene: [
+        new Scene(this.rowCount, this.columnCount)
+      ]
+    };
+  }
 
+  start() {
+    new Phaser.Game(this.setConfig());
+  }
+}
 
 window.addEventListener("load", () => {
-  new Phaser.Game(config);
+  new GameManager().start();
 });
 

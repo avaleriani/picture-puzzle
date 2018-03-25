@@ -1,7 +1,8 @@
 import Phaser from "phaser";
 import { shufflePuzzle } from "./helpers";
 
-export default class GameManager extends Phaser.Scene {
+/** Class with game scene configuration and functionality. */
+export class SceneManager extends Phaser.Scene {
   constructor(rows, columns) {
     super();
     this.rows = rows;
@@ -9,25 +10,30 @@ export default class GameManager extends Phaser.Scene {
     this.piecesGroup = [];
   }
 
+  /**
+   * Loads assets to be used in the scene.
+   */
   preload() {
     this.load.spritesheet("background", "../static/images/monks.jpg",
       {frameWidth: this.sys.game.config.width / this.rows, frameHeight: this.sys.game.config.height / this.columns});
   }
 
+  /**
+   * Create the game.
+   */
   create() {
     const pieceWidth = this.sys.game.config.width / this.rows;
     const pieceHeight = this.sys.game.config.height / this.columns;
     const piecesAmount = this.rows * this.columns;
     const shuffledIndexArray = shufflePuzzle(piecesAmount);
-    const _self = this;
+    const $this = this;
     let piecesIndex = 0;
     let piece;
 
     this.piecesGroup = this.add.group();
-
     for(let i = 0; i < this.rows; i++) {
       for(let j = 0; j < this.columns; j++) {
-        if (shuffledIndexArray[piecesIndex]) {
+        if (shuffledIndexArray[piecesIndex] !== 0) {
           piece = this.piecesGroup.create(j * pieceWidth, i * pieceHeight, "background", shuffledIndexArray[piecesIndex])
             .setOrigin(0)
             .setInteractive();
@@ -38,6 +44,7 @@ export default class GameManager extends Phaser.Scene {
             .setOrigin(0)
             .setInteractive();
           piece.black = true;
+          piece.visible = false;
         }
         piece.name = `piece-${i}x${j}y`;
         piece.currentIndex = piecesIndex;
@@ -46,94 +53,118 @@ export default class GameManager extends Phaser.Scene {
         piece.posY = i;
         piece.inputEnabled = true;
         piece.on("pointerdown", function() {
-          _self.selectPiece(this);
+          $this.pickPieceToMove(this);
         });
         piecesIndex++;
       }
     }
   }
 
-  selectPiece(piece) {
-    let blackPiece = this.canMove(piece);
-    if (blackPiece) {
-      this.movePiece(piece, blackPiece);
+  /**
+   * Verifies and move a piece if it's a valid movement.
+   * @param {object} piece - The clicked piece.
+   */
+  pickPieceToMove(piece) {
+    let blackTile = this.canMove(piece);
+    if (blackTile) {
+      this.movePiece(piece, blackTile);
     }
   }
 
-  movePiece(piece, blackPiece) {
+  /**
+   * Move the piece and adds a transition.
+   * @param {object} piece - The clicked piece.
+   * @param {object} blackTile - The black tile.
+   */
+  movePiece(piece, blackTile) {
     let tmpPiece = {
       posX: piece.posX,
       posY: piece.posY,
       currentIndex: piece.currentIndex
     };
 
-    this.addTween(piece, blackPiece);
+    this.addTween(piece, blackTile);
 
     //switch black and piece position
-    piece.posX = blackPiece.posX;
-    piece.posY = blackPiece.posY;
-    piece.currentIndex = blackPiece.currentIndex;
+    piece.posX = blackTile.posX;
+    piece.posY = blackTile.posY;
+    piece.currentIndex = blackTile.currentIndex;
     piece.name = `piece-${piece.posX}x${piece.posY}y`;
 
     //piece is the new black
-    blackPiece.posX = tmpPiece.posX;
-    blackPiece.posY = tmpPiece.posY;
-    blackPiece.currentIndex = tmpPiece.currentIndex;
-    blackPiece.name = `piece-${blackPiece.posX}x${blackPiece.posY}y`;
-    blackPiece.width = piece.width;
-    blackPiece.height = piece.height;
+    blackTile.posX = tmpPiece.posX;
+    blackTile.posY = tmpPiece.posY;
+    blackTile.currentIndex = tmpPiece.currentIndex;
+    blackTile.name = `piece-${blackTile.posX}x${blackTile.posY}y`;
+    blackTile.width = piece.width;
+    blackTile.height = piece.height;
 
     //win?
-    this.win(this.piecesGroup);
+    this.didWin(this.piecesGroup);
   }
 
-  addTween(piece, blackPiece) {
+  /**
+   * Adds the transition to the moving piece.
+   * @param {object} piece - The clicked piece.
+   * @param {object} blackTile - The black tile.
+   */
+  addTween(piece, blackTile) {
     this.tweens.add({
       targets: piece,
-      x: blackPiece.posX * (this.sys.game.config.width / this.rows),
-      y: blackPiece.posY * (this.sys.game.config.height / this.columns),
+      x: blackTile.posX * (this.sys.game.config.width / this.rows),
+      y: blackTile.posY * (this.sys.game.config.height / this.columns),
       duration: 250,
       ease: Phaser.Math.Easing.Bounce
     });
   }
 
+  /**
+   * Verifies if the clicked piece can move into the empty position.
+   * @param {object} piece - The clicked piece.
+   */
   canMove(piece) {
     const piecesGroupItems = this.piecesGroup.getChildren();
-    const blackPieceIndex = piecesGroupItems.findIndex(element => {
+    const blackTileIndex = piecesGroupItems.findIndex(element => {
       return (element.posX === (piece.posX - 1) && element.posY === piece.posY && element.black ||
         element.posX === (piece.posX + 1) && element.posY === piece.posY && element.black ||
         element.posY === (piece.posY - 1) && element.posX === piece.posX && element.black ||
         element.posY === (piece.posY + 1) && element.posX === piece.posX && element.black);
     });
 
-    return blackPieceIndex ? piecesGroupItems[blackPieceIndex] : false;
+    return blackTileIndex ? piecesGroupItems[blackTileIndex] : false;
   }
 
-  win(piecesGroup) {
+  /**
+   * Checks if the puzzle is in it's original position
+   * @param {array} piecesGroup - The current tiles array.
+   */
+  didWin(piecesGroup) {
     const didWin = piecesGroup.getChildren().every(element => {
-      console.log(element.currentIndex, element.destIndex)
-      return (element.currentIndex !== element.destIndex);
+      return (element.currentIndex === element.destIndex);
     });
-    console.log(didWin)
     if (didWin) {
       this.showWinMessage();
     }
   }
 
+  /**
+   * Shows the win message on game screen.
+   */
   showWinMessage() {
     const config1 = {
-      x: 0,
-      y: 0,
+      x: 60,
+      y: 160,
       width: this.sys.game.config.width,
       height: this.sys.game.config.height,
-      text: "Congratulations! \n You win!",
+      text: "YOU WIN!",
       style: {
-        font: "64px Helvetica",
-        color: "white",
+        font: "80px Helvetica",
+        color: "#000000",
         align: "center",
-        backgroundColor: "#red"
+        backgroundColor: "#a7ff78"
       }
     };
     this.make.text(config1);
+    this.piecesGroup.clear();
   }
 }

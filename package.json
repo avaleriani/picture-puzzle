@@ -7,7 +7,9 @@
     "license": "MIT",
     "scripts": {
         "dev": "MODE=development webpack-serve --open --log-time",
-        "build": "MODE=production webpack"
+        "build": "MODE=production webpack",
+        "test": "jest",
+        "test:watch": "jest --watchAll --env=jsdom"
     },
     "devDependencies": {
         "autoprefixer": "^8.1.0",
