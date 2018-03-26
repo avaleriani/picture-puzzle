@@ -6,7 +6,7 @@
     "author": "Agustin Valeriani <agvaleriani@gmail.com>",
     "license": "MIT",
     "scripts": {
-        "dev": "MODE=development webpack-serve --open --log-time",
+        "dev": "MODE=development webpack-dev-server --open",
         "build": "MODE=production webpack",
         "test": "karma start karma.config.js"
     },
@@ -25,7 +25,7 @@
         "eslint": "^4.19.0",
         "eslint-config-airbnb-base": "^12.1.0",
         "eslint-plugin-import": "^2.9.0",
-        "html-webpack-plugin": "^3.0.6",
+        "html-webpack-plugin": "^3.1.0",
         "karma": "^2.0.0",
         "karma-chai": "^0.1.0",
         "karma-chrome-launcher": "^2.2.0",
@@ -46,9 +46,9 @@
         "sass-loader": "^6.0.7",
         "sinon": "^4.4.8",
         "sugarss": "^1.0.1",
-        "webpack": "^4.1.1",
+        "webpack": "^4.2.0",
         "webpack-cli": "^2.0.12",
-        "webpack-serve": "^0.2.0"
+        "webpack-dev-server": "^3.1.1"
     },
     "dependencies": {
         "phaser": "^3.2.1"

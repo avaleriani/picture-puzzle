@@ -13,32 +13,10 @@ module.exports = {
     maxEntrypointSize: 2000000,
     maxAssetSize: 2000000
   },
-  plugins: [
-    new CleanWebpackPlugin(["dist"]),
-    new Webpack.NamedModulesPlugin(),
-    new HtmlWebpackPlugin({
-      title: "MediaMonks",
-      hash: true,
-      template: "./index.html"
-    }),
-    new Webpack.LoaderOptionsPlugin({
-      minimize: true
-    }),
-    new Webpack.DefinePlugin({
-      "CANVAS_RENDERER": JSON.stringify(true),
-      "WEBGL_RENDERER": JSON.stringify(true)
-    }),
-    new MiniCssExtractPlugin({
-      filename: "css/[name].css",
-      path: __dirname + "/dist/css",
-      chunkFilename: "[id].css"
-    })
-  ],
   entry: ["babel-polyfill", "./src/js/index.js"],
   output: {
     path: path.join(__dirname, "./dist"),
-    filename: "js/bundle.js",
-    pathinfo: true
+    filename: "js/bundle.js"
   },
   module: {
     rules: [
@@ -60,10 +38,7 @@ module.exports = {
         test: /\.js/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader",
-          options: {
-            presets: ["env"]
-          }
+          loader: "babel-loader"
         }
       },
       {
@@ -79,5 +54,26 @@ module.exports = {
         ]
       }
     ]
-  }
+  },
+  plugins: [
+    new CleanWebpackPlugin(["dist"]),
+    new Webpack.NamedModulesPlugin(),
+    new HtmlWebpackPlugin({
+      title: "MediaMonks",
+      hash: true,
+      template: "./index.html"
+    }),
+    new Webpack.LoaderOptionsPlugin({
+      minimize: true
+    }),
+    new Webpack.DefinePlugin({
+      "CANVAS_RENDERER": JSON.stringify(true),
+      "WEBGL_RENDERER": JSON.stringify(true)
+    }),
+    new MiniCssExtractPlugin({
+      filename: "css/[name].css",
+      path: __dirname + "/dist/css",
+      chunkFilename: "[id].css"
+    })
+  ]
 };
