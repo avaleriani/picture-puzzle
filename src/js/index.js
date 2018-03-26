@@ -36,6 +36,6 @@ window.addEventListener("load", () => {
   const image = "../static/images/monks.jpg";
   const gm = new GameManager();
   const config = gm.setConfig(element, image);
-  console.log(gm.start(config));
+  gm.start(config);
 });
 
