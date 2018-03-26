@@ -15,7 +15,6 @@ yarn
 
 ```yarn install```
 
-```
 ### Commands
 
 #### Launch a local development server
