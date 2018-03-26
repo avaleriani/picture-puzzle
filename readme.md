@@ -4,6 +4,8 @@ Randomly generates a sliding puzzle for the user to solve.
 
 I wanted to learn Phaser and took the chance to build this challenge with the lastest version of the library, in es6 and adding tests.
 
+Demo page: https://avaleriani.github.io/picture-puzzle/
+
 ### Prerequisites
 
 ```
