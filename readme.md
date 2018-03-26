@@ -6,8 +6,10 @@ I wanted to learn Phaser and took the chance to build this challenge with the la
 
 ### Prerequisites
 
-```node```
-```yarn```
+```
+node
+yarn
+```
 
 ### Installing
 
