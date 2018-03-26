@@ -2,6 +2,7 @@
 
 Randomly generates a sliding puzzle for the user to solve.
 
+I wanted to learn Phaser and took the chance to build this challenge with the last version of the library, in es6 and adding tests.
 
 ### Prerequisites
 

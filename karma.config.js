@@ -7,7 +7,7 @@ module.exports = (config) => {
     files: [
       "karma.setup.js",
       {pattern: "*.test.js", watched: false},
-      {pattern: "./../static/images/*.jpg", watched: false, included: false, served: true}
+      {pattern: "/../static/images/*.jpg", watched: false, included: false, served: true}
     ],
     scssPreprocessor: {
       options: {
@@ -37,11 +37,14 @@ module.exports = (config) => {
     reporters: ["progress", "html"],
     port: 9876,
     colors: true,
-    logLevel: config.ERROR,
+    logLevel: config.LOG_ERROR,
     autoWatch: true,
     browsers: ["Chrome"],
     singleRun: false,
-    concurrency: Infinity,
+    concurrency: 50,
+    browserConsoleLogOptions: {
+      level: "error"
+    },
     plugins: [
       require("karma-chrome-launcher"),
       require("karma-htmlfile-reporter"),

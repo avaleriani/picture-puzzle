@@ -27,7 +27,7 @@ export default class GameManager {
   }
 
   start(config) {
-    new Game(config);
+    return new Game(config);
   }
 }
 
@@ -36,6 +36,6 @@ window.addEventListener("load", () => {
   const image = "../static/images/monks.jpg";
   const gm = new GameManager();
   const config = gm.setConfig(element, image);
-  gm.start(config);
+  console.log(gm.start(config));
 });
 

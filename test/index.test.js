@@ -2,7 +2,7 @@ import GameManager from "./../src/js/index";
 
 describe("Game Constructor", () => {
   const element = document.createElement("div");
-  const image = "../static/images/monks.jpg";
+  const image = "static/images/monks.jpg";
   let config = {};
   let game;
 

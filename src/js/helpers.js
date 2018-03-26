@@ -2,9 +2,8 @@ import Phaser from "phaser";
 
 export function shufflePuzzle(piecesAmount) {
   const shuffledPuzzle = Phaser.Actions.Shuffle(Phaser.Utils.Array.NumberArray(0, piecesAmount - 1));
-  console.log(piecesAmount)
   if (shuffledPuzzle) {
-    if (!isSolvable(shuffledPuzzle) || isSorted(shuffledPuzzle)) {
+    if (!canBeSolved(shuffledPuzzle) || isSorted(shuffledPuzzle)) {
       return shufflePuzzle(piecesAmount);
     } else {
       return shuffledPuzzle;
@@ -12,7 +11,7 @@ export function shufflePuzzle(piecesAmount) {
   }
 }
 
-export function isSolvable(pieces) {
+export function canBeSolved(pieces) {
   /*A puzzle is solvable if:
   _The width of the puzzle (count of columns) is odd and there are an even number of inversions.
   _The width of the puzzle is even, there are an even number of inversions, and  the empty tile is on a
