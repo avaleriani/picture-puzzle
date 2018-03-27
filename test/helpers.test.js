@@ -27,6 +27,8 @@ describe("Helpers ", () => {
     const piecesD = [13, 2, 10, 3, 1, 12, 8, 4, 5, 0, 9, 6, 15, 14, 11, 7];
     const piecesE = [6, 13, 7, 10, 8, 9, 11, 0, 15, 2, 12, 5, 14, 3, 1, 4];
     const piecesF = [1, 2, 3, 4, 5, 6, 7, 8, 0, 9, 10, 11, 12, 13, 14, 15];
+    const piecesG = [15, 8, 9, 14, 5, 10, 1, 0, 12, 4, 3, 13, 11, 2, 7, 6];
+    const piecesH = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 
     expect(canBeSolved(piecesA)).to.be.true;
     expect(canBeSolved(piecesB)).to.be.true;
@@ -34,6 +36,8 @@ describe("Helpers ", () => {
     expect(canBeSolved(piecesD)).to.be.true;
     expect(canBeSolved(piecesE)).to.be.true;
     expect(canBeSolved(piecesF)).to.be.true;
+    expect(canBeSolved(piecesG)).to.be.true;
+    expect(canBeSolved(piecesH)).to.be.true;
   });
 
   it("should unordered array return false", () => {

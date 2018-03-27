@@ -17,10 +17,10 @@ export function shufflePuzzle(piecesAmount) {
 
 /**
  * Checks if a random array of numbers will work as puzzle.
- * 1. If pieces quantity is odd and number of inversions is even, is solvable
- * 2. If pieces quantity  is even, then;
- *  a. The black square  is on an even row counting from the bottom and number of inversions is odd.
- *  b. The black  is on an odd row counting from the bottom and number of inversions is even.
+ * 1. If the pieces quantity is odd and the inversions number is even.
+ * 2. If the grid width is even and:
+ *    a. The blank is on an odd row counting from the bottom and the number of inversions is even.
+ *    b. The blank is on an even row counting from the bottom, and the number of inversions is odd.
  * 3. For all other cases, the puzzle instance is not solvable.
  *
  * Ref: https://www.geeksforgeeks.org/check-instance-15-puzzle-solvable/
@@ -30,7 +30,7 @@ export function canBeSolved(pieces) {
   const rowCount = Math.sqrt(pieces.length);
   const inversions = getInversions(pieces);
   const blackTilePosition = findBlackTilePosition(pieces, rowCount);
-  if (!isEven(pieces.length)) {
+  if (!isEven(rowCount)) {
     return isEven(inversions);
   } else {
     if (!isEven(blackTilePosition)) {
