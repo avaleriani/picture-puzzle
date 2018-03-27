@@ -12,30 +12,54 @@ export function shufflePuzzle(piecesAmount) {
 }
 
 export function canBeSolved(pieces) {
-  const n = Math.sqrt(pieces.length);
-  let parity = 0;
-
-  for(let i = 0; i < pieces.length; i++) {
-
-    let value = pieces[i];
-
-    if (value === 0) {
-      if (n % 2 === 0) {
-        parity += n - 1 - (i / n | 0);
-      }
-      continue;
-    }
-
-    for(let j = i + 1; j < pieces.length; j++) {
-      if (pieces[j] < value && pieces[j] !== 0) {
-        parity += 1;
-      }
+  const rowCount = Math.sqrt(pieces.length);
+  const inversions = getInversions(pieces);
+  const blackTilePosition = findBlackTilePosition(pieces, rowCount);
+  // If grid is odd, return true if inversion
+  // count is even.
+  if (!isEven(pieces.length)) {
+    return isEven(inversions);
+  } else {// grid is even
+    if (!isEven(blackTilePosition)) {
+      return isEven(inversions);
+    } else {
+      return !isEven(inversions);
     }
   }
 
-  return parity % 2 === 0;
+}
+
+function isEven(num) {
+  return !(num % 2);
+}
+
+function getInversions(pieces) {
+  let inversionsCount = 0;
+  for(let i = 0; i < pieces.length - 1; i++) {
+    for(let j = i + 1; j < pieces.length; j++) {
+      if (pieces[j] && pieces[i] && pieces[i] > pieces[j])
+        inversionsCount = inversionsCount + 1;
+    }
+  }
+  return inversionsCount;
+}
+
+function findBlackTilePosition(pieces, rowCount) {
+  let rowNumberFromBottom = 1;
+  let cellCounter = 1;
+  for(let i = pieces.length - 1; i >= 0; i--) {
+    if (cellCounter === rowCount) {
+      cellCounter = 1;
+      rowNumberFromBottom = rowNumberFromBottom + 1;
+    } else {
+      cellCounter = cellCounter + 1;
+    }
+    if (pieces[i] === 0) {
+      return rowNumberFromBottom;
+    }
+  }
 }
 
 export function isSorted(pieces) {
-  return pieces.every((val, i, arr) => !i || (val >= arr[i - 1]));
+  return pieces.every((value, index, arr) => !index || (value >= arr[index - 1]));
 }

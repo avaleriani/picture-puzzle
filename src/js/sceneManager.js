@@ -26,7 +26,7 @@ export default class SceneManager extends Scene {
     const pieceWidth = this.sys.game.config.width / this.rows;
     const pieceHeight = this.sys.game.config.height / this.columns;
     const piecesAmount = this.rows * this.columns;
-    const shuffledIndexArray = shufflePuzzle(piecesAmount);
+    const shuffledIndexArray = shufflePuzzle(piecesAmount, this.rows, this.columns);
     const $this = this;
     let piecesIndex = 0;
     let piece;

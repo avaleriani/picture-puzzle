@@ -13,6 +13,9 @@ export default class GameManager {
 
   setConfig(element, image) {
     const scene = new Scene(this.rowCount, this.columnCount, image);
+    if (this.rowCount !== this.columnCount) {
+      throw Error("Not square puzzles are not supported yet.");
+    }
     return {
       title: "Media Monks Puzzle",
       version: "1.0",
