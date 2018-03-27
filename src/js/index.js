@@ -11,6 +11,11 @@ export default class GameManager {
     this.config = null;
   }
 
+  /**
+   * Returns the configuration to start a Phaser game.
+   * @param {object} element - The dom element to attach the game.
+   * @param {string} image - The url or file location of the image.
+   */
   setConfig(element, image) {
     const scene = new Scene(this.rowCount, this.columnCount, image);
     if (this.rowCount !== this.columnCount) {
@@ -29,6 +34,10 @@ export default class GameManager {
     };
   }
 
+  /**
+   * Starts the game
+   * @param {object} config - The game config object.
+   */
   start(config) {
     return new Game(config);
   }
