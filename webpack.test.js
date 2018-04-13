@@ -1,7 +1,6 @@
 const Webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
-const mode = process.env.MODE ? process.env.MODE : "production";
 require("babel-polyfill");
 
 module.exports = {
