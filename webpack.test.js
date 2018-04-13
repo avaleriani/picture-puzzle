@@ -14,7 +14,7 @@ module.exports = {
   plugins: [
     new Webpack.NamedModulesPlugin(),
     new HtmlWebpackPlugin({
-      title: "MediaMonks",
+      title: "PicturePuzzle",
       hash: true,
       template: "./index.html"
     }),

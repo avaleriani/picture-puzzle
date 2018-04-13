@@ -59,7 +59,7 @@ module.exports = {
     new CleanWebpackPlugin(["dist"]),
     new Webpack.NamedModulesPlugin(),
     new HtmlWebpackPlugin({
-      title: "MediaMonks",
+      title: "Picture Puzzle",
       hash: true,
       template: "./index.html"
     }),

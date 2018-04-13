@@ -22,7 +22,7 @@ export default class GameManager {
       throw Error("Not square puzzles are not supported yet.");
     }
     return {
-      title: "Media Monks Puzzle",
+      title: "Picture Puzzle",
       version: "1.0",
       url: "https://github.com/avaleriani/picture-puzzle",
       width: this.gameWidth,
@@ -45,7 +45,7 @@ export default class GameManager {
 
 window.addEventListener("load", () => {
   const element = document.getElementById("game");
-  const image = "../static/images/monks.jpg";
+  const image = "../static/images/pont.jpg";
   const gm = new GameManager();
   const config = gm.setConfig(element, image);
   gm.start(config);

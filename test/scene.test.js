@@ -3,7 +3,7 @@ import SceneManager from "./../src/js/sceneManager";
 
 describe("Scene Manager", () => {
   const element = document.createElement("div");
-  const image = "../static/images/monks.jpg";
+  const image = "../static/images/pont.jpg";
   let config = {};
   let game;
   let gameObj;
